@@ -1,78 +1,907 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-CN">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>chy</title>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>chy | Developer Portfolio</title>
+  <meta name="description" content="chy 的开发者作品集主页" />
+  <style>
+    :root{
+      --bg: #0b1020;
+      --bg-soft: #121933;
+      --card: rgba(18, 25, 51, 0.72);
+      --text: #ecf2ff;
+      --muted: #a9b4d0;
+      --line: rgba(255,255,255,0.08);
+      --brand: #6ea8fe;
+      --brand-2: #8b5cf6;
+      --success: #34d399;
+      --shadow: 0 10px 30px rgba(0,0,0,0.28);
+      --radius: 20px;
+      --max: 1150px;
+    }
 
-<style>
-body{
-margin:0;
-font-family:Arial;
-background:#111;
-color:white;
-text-align:center;
-}
+    *{
+      box-sizing: border-box;
+    }
 
-header{
-padding:80px 20px;
-}
+    html{
+      scroll-behavior: smooth;
+    }
 
-h1{
-font-size:48px;
-}
+    body{
+      margin: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--text);
+      background:
+        radial-gradient(circle at top left, rgba(110,168,254,0.18), transparent 26%),
+        radial-gradient(circle at top right, rgba(139,92,246,0.16), transparent 22%),
+        linear-gradient(180deg, #0a0f1f 0%, #0b1020 100%);
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
 
-.container{
-max-width:800px;
-margin:auto;
-padding:20px;
-}
+    a{
+      color: inherit;
+      text-decoration: none;
+    }
 
-.project{
-background:#222;
-margin:20px 0;
-padding:20px;
-border-radius:8px;
-}
+    img{
+      max-width: 100%;
+      display: block;
+    }
 
-footer{
-margin-top:80px;
-color:#888;
-padding:20px;
-}
-</style>
+    .container{
+      width: min(var(--max), calc(100% - 32px));
+      margin: 0 auto;
+    }
 
+    .nav{
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      backdrop-filter: blur(14px);
+      background: rgba(11,16,32,0.55);
+      border-bottom: 1px solid var(--line);
+    }
+
+    .nav-inner{
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 16px;
+      min-height: 72px;
+    }
+
+    .logo{
+      font-weight: 800;
+      letter-spacing: 0.5px;
+      font-size: 20px;
+    }
+
+    .logo span{
+      color: var(--brand);
+    }
+
+    .nav-links{
+      display: flex;
+      gap: 18px;
+      flex-wrap: wrap;
+    }
+
+    .nav-links a{
+      color: var(--muted);
+      font-size: 14px;
+      transition: 0.25s;
+    }
+
+    .nav-links a:hover{
+      color: var(--text);
+    }
+
+    .hero{
+      position: relative;
+      padding: 96px 0 50px;
+    }
+
+    .hero-grid{
+      display: grid;
+      grid-template-columns: 1.2fr 0.8fr;
+      gap: 28px;
+      align-items: center;
+    }
+
+    .badge{
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      padding: 10px 14px;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      color: var(--muted);
+      background: rgba(255,255,255,0.03);
+      font-size: 14px;
+      margin-bottom: 18px;
+      animation: fadeUp 0.7s ease both;
+    }
+
+    .hero h1{
+      margin: 0 0 16px;
+      font-size: clamp(40px, 7vw, 72px);
+      line-height: 1.02;
+      letter-spacing: -1.8px;
+      animation: fadeUp 0.8s ease both;
+    }
+
+    .gradient-text{
+      background: linear-gradient(90deg, #ffffff, #b9d2ff 45%, #b69cff 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .hero p{
+      margin: 0;
+      color: var(--muted);
+      font-size: 18px;
+      line-height: 1.8;
+      max-width: 760px;
+      animation: fadeUp 0.9s ease both;
+    }
+
+    .hero-actions{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-top: 28px;
+      animation: fadeUp 1s ease both;
+    }
+
+    .btn{
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+      padding: 14px 20px;
+      border-radius: 14px;
+      font-weight: 700;
+      border: 1px solid transparent;
+      transition: transform 0.25s, box-shadow 0.25s, border-color 0.25s, background 0.25s;
+      cursor: pointer;
+    }
+
+    .btn:hover{
+      transform: translateY(-2px);
+    }
+
+    .btn-primary{
+      background: linear-gradient(135deg, var(--brand), var(--brand-2));
+      color: white;
+      box-shadow: 0 10px 24px rgba(110,168,254,0.25);
+    }
+
+    .btn-secondary{
+      background: rgba(255,255,255,0.03);
+      border-color: var(--line);
+      color: var(--text);
+    }
+
+    .hero-card{
+      background: linear-gradient(180deg, rgba(255,255,255,0.06), rgba(255,255,255,0.03));
+      border: 1px solid var(--line);
+      border-radius: 24px;
+      padding: 22px;
+      box-shadow: var(--shadow);
+      animation: floatCard 4s ease-in-out infinite;
+    }
+
+    .hero-card-top{
+      display: flex;
+      gap: 8px;
+      margin-bottom: 18px;
+    }
+
+    .dot{
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: rgba(255,255,255,0.18);
+    }
+
+    .code-window{
+      background: rgba(6,10,22,0.78);
+      border-radius: 18px;
+      border: 1px solid rgba(255,255,255,0.06);
+      padding: 18px;
+      overflow: hidden;
+    }
+
+    .code-line{
+      display: flex;
+      gap: 14px;
+      font-family: ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+      font-size: 14px;
+      line-height: 1.9;
+      color: #dfe7ff;
+      white-space: nowrap;
+    }
+
+    .code-line span:first-child{
+      color: #6d7899;
+      min-width: 24px;
+      text-align: right;
+      user-select: none;
+    }
+
+    .section{
+      padding: 48px 0;
+    }
+
+    .section-title{
+      display: flex;
+      align-items: end;
+      justify-content: space-between;
+      gap: 12px;
+      margin-bottom: 24px;
+      flex-wrap: wrap;
+    }
+
+    .section-title h2{
+      margin: 0;
+      font-size: clamp(28px, 4vw, 40px);
+      letter-spacing: -1px;
+    }
+
+    .section-title p{
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .grid{
+      display: grid;
+      gap: 20px;
+    }
+
+    .about-grid{
+      grid-template-columns: 1.1fr 0.9fr;
+    }
+
+    .card{
+      background: var(--card);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      backdrop-filter: blur(10px);
+    }
+
+    .card-body{
+      padding: 24px;
+    }
+
+    .about-text{
+      color: var(--muted);
+      line-height: 1.9;
+      font-size: 16px;
+    }
+
+    .stats{
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 14px;
+    }
+
+    .stat{
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+    }
+
+    .stat strong{
+      display: block;
+      font-size: 28px;
+      margin-bottom: 6px;
+    }
+
+    .stat span{
+      color: var(--muted);
+      font-size: 14px;
+    }
+
+    .skills{
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .skill-card{
+      padding: 22px;
+      border-radius: 20px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      transition: transform 0.28s, border-color 0.28s, background 0.28s;
+    }
+
+    .skill-card:hover{
+      transform: translateY(-4px);
+      border-color: rgba(110,168,254,0.45);
+      background: rgba(255,255,255,0.05);
+    }
+
+    .skill-card h3{
+      margin: 0 0 10px;
+      font-size: 18px;
+    }
+
+    .skill-card p{
+      margin: 0 0 16px;
+      color: var(--muted);
+      line-height: 1.7;
+      font-size: 14px;
+    }
+
+    .tags{
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+    }
+
+    .tag{
+      padding: 8px 12px;
+      border-radius: 999px;
+      background: rgba(255,255,255,0.05);
+      border: 1px solid var(--line);
+      color: #dce6ff;
+      font-size: 13px;
+    }
+
+    .projects{
+      grid-template-columns: repeat(3, 1fr);
+    }
+
+    .project-card{
+      overflow: hidden;
+      transition: transform 0.3s, border-color 0.3s;
+    }
+
+    .project-card:hover{
+      transform: translateY(-6px);
+      border-color: rgba(139,92,246,0.45);
+    }
+
+    .project-cover{
+      height: 180px;
+      position: relative;
+      background:
+        radial-gradient(circle at 20% 20%, rgba(110,168,254,0.35), transparent 35%),
+        radial-gradient(circle at 80% 30%, rgba(139,92,246,0.35), transparent 35%),
+        linear-gradient(135deg, #111937, #0a1026);
+      border-bottom: 1px solid var(--line);
+      overflow: hidden;
+    }
+
+    .project-cover::after{
+      content: "";
+      position: absolute;
+      inset: 18px;
+      border-radius: 16px;
+      border: 1px solid rgba(255,255,255,0.08);
+      background: linear-gradient(180deg, rgba(255,255,255,0.08), rgba(255,255,255,0.03));
+    }
+
+    .project-card .card-body{
+      display: flex;
+      flex-direction: column;
+      gap: 14px;
+    }
+
+    .project-top{
+      display: flex;
+      align-items: start;
+      justify-content: space-between;
+      gap: 12px;
+    }
+
+    .project-card h3{
+      margin: 0;
+      font-size: 20px;
+    }
+
+    .project-card p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+      font-size: 15px;
+    }
+
+    .project-links{
+      display: flex;
+      gap: 12px;
+      flex-wrap: wrap;
+      margin-top: auto;
+    }
+
+    .project-link{
+      font-size: 14px;
+      font-weight: 700;
+      color: #dce6ff;
+      padding: 10px 14px;
+      border-radius: 12px;
+      background: rgba(255,255,255,0.04);
+      border: 1px solid var(--line);
+      transition: 0.25s;
+    }
+
+    .project-link:hover{
+      background: rgba(255,255,255,0.08);
+    }
+
+    .timeline{
+      display: grid;
+      gap: 16px;
+    }
+
+    .timeline-item{
+      display: grid;
+      grid-template-columns: 120px 1fr;
+      gap: 18px;
+      padding: 20px;
+      border-radius: 18px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+    }
+
+    .timeline-time{
+      color: var(--brand);
+      font-weight: 700;
+    }
+
+    .timeline-item h3{
+      margin: 0 0 8px;
+      font-size: 18px;
+    }
+
+    .timeline-item p{
+      margin: 0;
+      color: var(--muted);
+      line-height: 1.8;
+    }
+
+    .contact-grid{
+      grid-template-columns: 1fr 1fr;
+    }
+
+    .contact-list{
+      display: grid;
+      gap: 14px;
+    }
+
+    .contact-item{
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+      padding: 16px 18px;
+      border-radius: 16px;
+      background: rgba(255,255,255,0.03);
+      border: 1px solid var(--line);
+      color: var(--muted);
+    }
+
+    .contact-item strong{
+      color: var(--text);
+    }
+
+    .footer{
+      padding: 42px 0 70px;
+      color: var(--muted);
+    }
+
+    .footer-inner{
+      display: flex;
+      justify-content: space-between;
+      gap: 16px;
+      flex-wrap: wrap;
+      border-top: 1px solid var(--line);
+      padding-top: 24px;
+    }
+
+    .reveal{
+      opacity: 0;
+      transform: translateY(22px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.show{
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    @keyframes fadeUp{
+      from{
+        opacity: 0;
+        transform: translateY(22px);
+      }
+      to{
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes floatCard{
+      0%, 100%{
+        transform: translateY(0px);
+      }
+      50%{
+        transform: translateY(-8px);
+      }
+    }
+
+    @media (max-width: 980px){
+      .hero-grid,
+      .about-grid,
+      .contact-grid,
+      .skills,
+      .projects{
+        grid-template-columns: 1fr;
+      }
+
+      .timeline-item{
+        grid-template-columns: 1fr;
+      }
+
+      .hero{
+        padding-top: 72px;
+      }
+
+      .nav-inner{
+        padding: 12px 0;
+      }
+    }
+
+    @media (max-width: 640px){
+      .nav-links{
+        gap: 12px;
+      }
+
+      .hero h1{
+        letter-spacing: -1px;
+      }
+
+      .hero p{
+        font-size: 16px;
+      }
+
+      .btn{
+        width: 100%;
+      }
+
+      .hero-actions{
+        flex-direction: column;
+      }
+
+      .stats{
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
 </head>
-
 <body>
 
-<header>
-<h1>chy</h1>
-<p>个人主页</p >
-</header>
+  <nav class="nav">
+    <div class="container nav-inner">
+      <a class="logo" href="#top">chy<span>.</span></a>
+      <div class="nav-links">
+        <a href="#about">关于我</a>
+        <a href="#skills">技能</a>
+        <a href="#projects">项目</a>
+        <a href="#experience">经历</a>
+        <a href="#contact">联系</a>
+      </div>
+    </div>
+  </nav>
 
-<div class="container">
+  <main id="top">
+    <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <div class="badge">👋 Developer Portfolio / Frontend / Builder</div>
+          <h1>
+            你好，我是 <span class="gradient-text">chy</span><br>
+            正在持续构建更好的网页与项目
+          </h1>
+          <p>
+            我专注于把想法变成真实可访问的产品页面，喜欢简约设计、流畅交互和清晰的代码结构。
+            这是我的个人开发者主页，用来展示技能、项目、链接和持续成长的过程。
+          </p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#projects">查看项目</a>
+            <a class="btn btn-secondary" href="https://github.com/chy340" target="_blank">GitHub 主页</a>
+            <a class="btn btn-secondary" href="#contact">联系我</a>
+          </div>
+        </div>
 
-<h2>关于我</h2>
-<p>你好，我是 chy，这是我的个人网站。</p >
+        <div class="hero-card">
+          <div class="hero-card-top">
+            <div class="dot"></div>
+            <div class="dot"></div>
+            <div class="dot"></div>
+          </div>
+          <div class="code-window">
+            <div class="code-line"><span>1</span><span>const developer = {</span></div>
+            <div class="code-line"><span>2</span><span>&nbsp;&nbsp;name: "chy",</span></div>
+            <div class="code-line"><span>3</span><span>&nbsp;&nbsp;role: "Frontend Developer",</span></div>
+            <div class="code-line"><span>4</span><span>&nbsp;&nbsp;focus: ["HTML", "CSS", "JavaScript"],</span></div>
+            <div class="code-line"><span>5</span><span>&nbsp;&nbsp;building: "Personal Portfolio",</span></div>
+            <div class="code-line"><span>6</span><span>&nbsp;&nbsp;github: "github.com/chy340"</span></div>
+            <div class="code-line"><span>7</span><span>};</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
 
-<h2>项目</h2>
+    <section id="about" class="section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>关于我</h2>
+          <p>简洁介绍 / 可随时修改</p>
+        </div>
 
-<div class="project">
-<h3>个人网站</h3>
-<p>使用 HTML 制作的网站。</p >
-</div>
+        <div class="grid about-grid">
+          <div class="card reveal">
+            <div class="card-body">
+              <div class="about-text">
+                我是 chy，一名持续学习中的开发者，关注前端界面、网页布局、交互体验和个人项目构建。
+                我喜欢把复杂内容做得更直观，也喜欢把页面打磨得更简洁、更现代。
+                这个网站是我的在线作品集，后续可以继续增加更多项目、技能、链接和个人介绍。
+              </div>
+            </div>
+          </div>
 
-<div class="project">
-<h3>工具项目</h3>
-<p>一些练习的小工具。</p >
-</div>
+          <div class="card reveal">
+            <div class="card-body">
+              <div class="stats">
+                <div class="stat">
+                  <strong>03+</strong>
+                  <span>展示项目</span>
+                </div>
+                <div class="stat">
+                  <strong>06+</strong>
+                  <span>核心技能标签</span>
+                </div>
+                <div class="stat">
+                  <strong>100%</strong>
+                  <span>单文件可修改</span>
+                </div>
+                <div class="stat">
+                  <strong>24/7</strong>
+                  <span>在线公开访问</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
 
-</div>
+      </div>
+    </section>
 
-<footer>
-© 2026 chy
-</footer>
+    <section id="skills" class="section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>技能展示</h2>
+          <p>你可以直接改文字和标签</p>
+        </div>
 
+        <div class="grid skills">
+          <div class="skill-card reveal">
+            <h3>前端基础</h3>
+            <p>能够使用网页基础技术搭建完整页面，完成布局、样式、响应式适配和组件化展示。</p>
+            <div class="tags">
+              <span class="tag">HTML5</span>
+              <span class="tag">CSS3</span>
+              <span class="tag">Responsive</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>交互与体验</h3>
+            <p>注重页面层级、按钮反馈、卡片悬停、滚动动画和整体视觉节奏，让页面更像真正产品。</p>
+            <div class="tags">
+              <span class="tag">UI Design</span>
+              <span class="tag">Animation</span>
+              <span class="tag">UX Thinking</span>
+            </div>
+          </div>
+
+          <div class="skill-card reveal">
+            <h3>项目构建</h3>
+            <p>可以把个人主页、展示页和作品集整合成可以直接部署上线的网站，并持续迭代修改。</p>
+            <div class="tags">
+              <span class="tag">GitHub Pages</span>
+              <span class="tag">Deployment</span>
+              <span class="tag">Portfolio</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="projects" class="section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>项目卡片</h2>
+          <p>下面每个项目都能自行改名字、描述、链接</p>
+        </div>
+
+        <div class="grid projects">
+          <article class="card project-card reveal">
+            <div class="project-cover"></div>
+            <div class="card-body">
+              <div class="project-top">
+                <h3>个人作品集网站</h3>
+                <span class="tag">Featured</span>
+              </div>
+              <p>
+                一个现代风格的开发者主页，包含首页介绍、技能展示、项目卡片、联系信息和滚动动画，
+                适合持续扩展成完整个人品牌网站。
+              </p>
+              <div class="tags">
+                <span class="tag">HTML</span>
+                <span class="tag">CSS</span>
+                <span class="tag">JavaScript</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://chy340.github.io/website" target="_blank">在线查看</a>
+                <a class="project-link" href="https://github.com/chy340/website" target="_blank">GitHub</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project-card reveal">
+            <div class="project-cover"></div>
+            <div class="card-body">
+              <div class="project-top">
+                <h3>工具练习项目</h3>
+                <span class="tag">Practice</span>
+              </div>
+              <p>
+                用来练习页面结构、功能交互和代码组织方式的小项目区域。
+                你以后可以把真实项目名称、说明和链接直接替换到这里。
+              </p>
+              <div class="tags">
+                <span class="tag">UI</span>
+                <span class="tag">Web</span>
+                <span class="tag">Ideas</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/chy340" target="_blank">查看源码</a>
+                <a class="project-link" href="#contact">联系我</a>
+              </div>
+            </div>
+          </article>
+
+          <article class="card project-card reveal">
+            <div class="project-cover"></div>
+            <div class="card-body">
+              <div class="project-top">
+                <h3>学习记录与实验</h3>
+                <span class="tag">Lab</span>
+              </div>
+              <p>
+                记录学习中的页面实验、样式练习、布局优化和交互动效。
+                非常适合后续扩展成博客、笔记页或实验项目集合。
+              </p>
+              <div class="tags">
+                <span class="tag">Notes</span>
+                <span class="tag">Design</span>
+                <span class="tag">Growth</span>
+              </div>
+              <div class="project-links">
+                <a class="project-link" href="https://github.com/chy340" target="_blank">GitHub 主页</a>
+                <a class="project-link" href="#about">了解更多</a>
+              </div>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="experience" class="section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>成长经历</h2>
+          <p>可以改成学习经历 / 工作经历 / 时间线</p>
+        </div>
+
+        <div class="timeline">
+          <div class="timeline-item reveal">
+            <div class="timeline-time">2026</div>
+            <div>
+              <h3>建立个人在线作品集</h3>
+              <p>从零开始学习创建网页、上传代码、部署网站，并把个人主页真正发布到互联网。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-time">进行中</div>
+            <div>
+              <h3>持续完善前端技能</h3>
+              <p>继续练习页面结构、视觉设计、交互体验与项目展示，让主页逐渐成长为完整的开发者品牌站点。</p>
+            </div>
+          </div>
+
+          <div class="timeline-item reveal">
+            <div class="timeline-time">下一步</div>
+            <div>
+              <h3>增加更多真实项目</h3>
+              <p>后续可以继续加入项目截图、项目详情页、联系方式、简历入口、博客和更多作品链接。</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact" class="section">
+      <div class="container">
+        <div class="section-title reveal">
+          <h2>联系与链接</h2>
+          <p>这里也能自由修改</p>
+        </div>
+
+        <div class="grid contact-grid">
+          <div class="card reveal">
+            <div class="card-body">
+              <h3 style="margin-top:0;">快速联系</h3>
+              <div class="contact-list">
+                <div class="contact-item">
+                  <strong>GitHub</strong>
+                  <a href="https://github.com/chy340" target="_blank">github.com/chy340</a>
+                </div>
+                <div class="contact-item">
+                  <strong>网站</strong>
+                  <a href="https://chy340.github.io/website" target="_blank">chy340.github.io/website</a>
+                </div>
+                <div class="contact-item">
+                  <strong>邮箱</strong>
+                  <span>your-email@example.com</span>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <div class="card reveal">
+            <div class="card-body">
+              <h3 style="margin-top:0;">说明</h3>
+              <p style="margin:0; color:var(--muted); line-height:1.9;">
+                这个网站是单文件结构，所有文字、项目名称、链接、技能标签、联系方式，
+                你都可以在同一个 <strong style="color:#fff;">index.html</strong> 文件里直接修改。
+                不需要额外安装任何东西。
+              </p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container footer-inner">
+      <div>© 2026 chy. All rights reserved.</div>
+      <div>Built with HTML + CSS + JavaScript</div>
+    </div>
+  </footer>
+
+  <script>
+    const reveals = document.querySelectorAll('.reveal');
+
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          entry.target.classList.add('show');
+        }
+      });
+    }, {
+      threshold: 0.12
+    });
+
+    reveals.forEach((el) => observer.observe(el));
+  </script>
 </body>
 </html>
